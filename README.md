@@ -42,3 +42,18 @@ argocd app sync [app-name]
 argocd proj create
 
 argocd proj list
+
+# Reconciliation loop - how often argo will sync with repo (default -3 min)
+kubectl edit configmaps argocd-cm -n argocd
+
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: argocd-cm
+  namespace: argocd
+  labels:
+    app.kubernetes.io/name: argocd-cm
+    app.kubernetes.io/part-of: argocd
+data:
+  timeout.reconciliation: 60s
+
