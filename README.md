@@ -57,3 +57,37 @@ metadata:
 data:
   timeout.reconciliation: 60s
 
+# Application health
+
+custom health check 
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  labels:
+    app.kubernetes.io/name: argocd-cm
+    app.kubernetes.io/part-of: argocd
+  name: argocd-cm
+  namespace: argocd
+data:
+  resource.customizations.health.ConfigMap: |
+    hs = {}
+    hs.status = "Healthy"
+     if obj.data.TRIANGLE_COLOR == "white" then
+        hs.status = "Degraded"
+        hs.message = "Use any color other than White "
+     end
+    return hs
+
+it's looking on configmap of the app
+health-check/configmap.yml
+
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: moving-shapes-colors
+data:
+  CIRCLE_COLOR: "pink"
+  OVAL_COLOR: "lightgreen"
+  SQUARE_COLOR: "orange"
+  TRIANGLE_COLOR: "white"   # use white to get a Degraded message in ArgoCD
+  RECTANGLE_COLOR: "blue" 
