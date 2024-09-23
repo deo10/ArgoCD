@@ -1,4 +1,4 @@
-ArgoCD main components
+# ArgoCD main components
 
 Application Controller: The Application Controller is the core component of ArgoCD. It continuously monitors Git repositories for changes in application manifests (such as Helm charts, Kubernetes YAML files, Kustomize overlays, etc.) and reconciles the desired state defined in the Git repository with the actual state of the Kubernetes cluster.
 
